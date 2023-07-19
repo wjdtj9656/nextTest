@@ -1,8 +1,10 @@
-import { NextPage } from "next";
+import { GetStaticProps, NextPage, NextPageContext } from "next";
 import Head from 'next/head'
 import Link from "next/link";
 
-type SSGProps = {}
+type SSGProps = {
+  message: string;
+}
 
 const SSG: NextPage<SSGProps> = () => {
   return (
@@ -18,5 +20,15 @@ const SSG: NextPage<SSGProps> = () => {
       </main>
     </div>
   )
+}
+export const getStaticProps: GetStaticProps<SSGProps> = async (context) => {
+  const timestamp = new Date().toLocaleString();
+  const message = `${timestamp}에 getStaticProps가 실행됐습니다.`
+  console.log(message);
+  return {
+    props: {
+      message,
+    }
+  }
 }
 export default SSG;
